@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-bg-mobile xl:bg-bg-desktop bg-red-400 font-poppins;
+    }
+}

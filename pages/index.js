@@ -1,82 +1,117 @@
-import Head from 'next/head'
+import Head from "next/head";
+import { useState } from "react";
+import Input from "../components/Input";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    const [firstNameInput, setFirstNameInput] = useState("");
+    const [lastNameInput, setLastNameInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+    const [firstNameError, setFirstNameError] = useState(null);
+    const [lastNameError, setLastNameError] = useState(null);
+    const [emailError, setEmailError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
+    const firstNameChangeHandler = (event) => {
+        setFirstNameInput(event.target.value);
+    };
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+    const lastNameChangeHandler = (event) => {
+        setLastNameInput(event.target.value);
+    };
 
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
+    const emailChangeHandler = (event) => {
+        setEmailInput(event.target.value);
+    };
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
+    const passwordChangeHandler = (event) => {
+        setPasswordInput(event.target.value);
+    };
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+    const submitHandler = (e) => {
+        e.preventDefault();
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+        if (!firstNameInput) {
+            setFirstNameError("First Name cannot be empty.");
+        }
+        if (!lastNameInput) {
+            setLastNameError("Last Name cannot be empty.");
+        }
+        if (!emailInput || emailInput.includes("@")) {
+            setEmailError("Looks like this is not an email.");
+        }
+        if (!passwordInput) {
+            setPasswordError("Password cannot be empty");
+        }
+    };
+
+    return (
+        <>
+            <Head>
+                <title>Intro Component with sign up form - Rhythm Saha</title>
+            </Head>
+
+            <div className="max-w-6xl w-10/12 mx-auto grid xl:grid-cols-2 gap-12 h-full place-items-center xl:min-h-screen">
+                <div>
+                    <h1 className="text-white font-bold text-2xl mt-20 px-8 text-center xl:text-left xl:px-0 xl:text-5xl">
+                        Learn to code by watching others
+                    </h1>
+
+                    <p className="text-white text-center mt-4 xl:text-left">
+                        See how experienced developers solve problems in
+                        real-time. Watching scripted tutorials is great, but
+                        understanding how developers think is invaluable.
+                    </p>
+                </div>
+
+                <div className="mb-8">
+                    <div className="bg-indigo-800 text-white text-center font-normal py-5 px-14 rounded-md text-sm">
+                        <strong className="font-semibold">
+                            Try it free 7 days{" "}
+                        </strong>
+                        then $20/mo. thereafter
+                    </div>
+
+                    <form
+                        className="w-full bg-white p-6 mt-4 rounded-lg"
+                        onSubmit={submitHandler}
+                    >
+                        <Input
+                            type="text"
+                            value={firstNameInput}
+                            placeholder="First Name"
+                            error={firstNameError}
+                            onChange={firstNameChangeHandler}
+                        />
+                        <Input
+                            type="text"
+                            value={lastNameInput}
+                            placeholder="Last Name"
+                            error={lastNameError}
+                            onChange={lastNameChangeHandler}
+                        />
+                        <Input
+                            type="text"
+                            value={emailInput}
+                            placeholder="Email Address"
+                            error={emailError}
+                            onChange={emailChangeHandler}
+                        />
+                        <Input
+                            type="password"
+                            value={[passwordInput]}
+                            placeholder="Password"
+                            error={passwordError}
+                            onChange={passwordChangeHandler}
+                        />
+
+                        <button className="uppercase bg-green-500 text-white w-full p-4 mt-2 rounded-md font-medium text-sm tracking-wider hover:bg-green-400">
+                            Claim your free trial
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </>
+    );
 }
